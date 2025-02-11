@@ -7,10 +7,14 @@ public class MulliganChance {
     private static  int DECK_SIZE = 60;
     private static  int HAND_SIZE = 7;
     private static  int TRIALS = 10000;
-
+    
+    //This is just setting random numbers method
     public static void main(String[] args) {
         Random rand = new Random();
         
+    //This is making the loop so we can go through each amount of pokemon in your deck until you reach 60 pokemon and no energy cards
+    //We are setting the number of trials and each trial is an attempt of an open hand
+    //We also are keeping track of how many pokemon cards are in hand
         System.out.println("Pokemon Count | Mulligan % Chance");        
         for (int pokemonCount = 1; pokemonCount <= DECK_SIZE; pokemonCount++) {
             int mulligans = 0;
@@ -28,7 +32,7 @@ public class MulliganChance {
                     mulligans++;
                 }
             }
-        
+        //The mulligan is keeping track of how many trails end up with zero pokemon and we convert it into a percent.
             double mulliganChance = (mulligans / (double) TRIALS) * 100;
             System.out.printf("%13d | %.2f%%\n", pokemonCount, mulliganChance);
         }
