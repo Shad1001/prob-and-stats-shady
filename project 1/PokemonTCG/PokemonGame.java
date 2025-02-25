@@ -270,11 +270,10 @@ public class PokemonGame {
     
     // Main method 
     public static void main(String[] args) {
-        PokemonGame game = new PokemonGame();                     // Create the game instance
-        System.out.println("Initializing Pokémon Game...");       // Print initialization message
-        game.startGame();                                           // Start the game loop
+        PokemonGame game = new PokemonGame();                     
+        System.out.println("Initializing Pokémon Game...");       
+        game.startGame();                                           // Start the game 
         System.out.println("Game over.");                           // Print game over message
-        System.out.println("Thank you for playing!");               // Thank the player
         System.exit(0);                                             // Exit the program
     }
 }
