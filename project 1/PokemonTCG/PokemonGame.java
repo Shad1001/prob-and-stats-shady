@@ -268,7 +268,7 @@ public class PokemonGame {
         return false;
     }
     
-    // Main method with exactly 6 lines of code (inside the method body) as required
+    // Main method 
     public static void main(String[] args) {
         PokemonGame game = new PokemonGame();                     // Create the game instance
         System.out.println("Initializing Pokémon Game...");       // Print initialization message
