@@ -1,5 +1,7 @@
 // This is the main class that simulates the Pokemon Trading Card Game
 // It handles game initialization, player turns, and win conditions
+// Talk about how I screwed up the first part which was the way you setup the cards and the stats
+// Say "blank" helped me on how to fix the stats correctly
 import java.util.ArrayList;
 
 public class PokemonGame {
