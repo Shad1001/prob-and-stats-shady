@@ -1,6 +1,6 @@
 //this represents a pokemon card in my game
 //It will extend the base card class and includes attriubtes for all of their stats
-
+//Make sure to use two decks not just one each player gets a deck
 public abstract class Pokemon extends Card {
     // Basic attributes for my Pokemon cards
     protected int hp;               // Hit points (health) 
