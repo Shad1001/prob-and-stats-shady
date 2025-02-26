@@ -1,6 +1,8 @@
 //this represents a pokemon card in my game
 //It will extend the base card class and includes attriubtes for all of their stats
 //Make sure to use two decks not just one each player gets a deck
+// need to give options to start up the game, ask if you want to play, ask if you want to do player1 vs ai or player1 vs player2 which is you controlling both players.
+// ask to choose the amount of cards you want in a deck
 public abstract class Pokemon extends Card {
     // Basic attributes for my Pokemon cards
     protected int hp;               // Hit points (health) 
