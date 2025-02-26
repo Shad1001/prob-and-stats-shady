@@ -5,9 +5,9 @@ public abstract class Pokemon extends Card {
     // Basic attributes for my Pokemon cards
     protected int hp;               // Hit points (health) 
     protected int attack;           // Basic attack strength
-    protected int defense;          // Basic defense strength
-    protected int specialAttack;    // Special attack strength
-    protected int specialDefense;   // Special defense strength
+    protected int defense;          // Basic defense strength remove no pokemon have defense
+    protected int specialAttack;    // Special attack strength not all pokemon have specialattacks fix that
+    protected int specialDefense;   // Special defense strength not all pokemon have specialdefense either fix that adjust
     protected int retreatCost;      // Energy cost required to retreat the Pokemon
     protected int attachedEnergy;   // Number of energy cards currently attached
     protected String[] moves;       // Array of move names that the Pokémon can use
