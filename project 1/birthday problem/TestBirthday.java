@@ -1,7 +1,11 @@
 public class TestBirthday {
     public static void main(String[] args) {
+        // Create a new instance of BirthdayExperiment.
         BirthdayExperiment experiment = new BirthdayExperiment();
-        experiment.execute(899, 100);
+        
+        // Run the experiment
+        // Simulating a class of 32 people
+        // Over 100 iterations 
+        experiment.execute(32, 100);
     }
 }
-
