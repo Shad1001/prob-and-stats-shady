@@ -1,59 +1,102 @@
-//this represents a pokemon card in my game
-//It will extend the base card class and includes attriubtes for all of their stats
-//Make sure to use two decks not just one each player gets a deck
-// need to give options to start up the game, ask if you want to play, ask if you want to do player1 vs ai or player1 vs player2 which is you controlling both players.
-// ask to choose the amount of cards you want in a deck
+import java.util.ArrayList;
+
+/**
+ * Pokemon.java
+ * Abstract class representing a Pokemon TCG card.
+ * Stores HP, type, weakness, retreat cost, available attacks, and attached Energy cards.
+ */
 public abstract class Pokemon extends Card {
-    // Basic attributes for my Pokemon cards
-    protected int hp;               // Hit points (health) 
-    protected int attack;           // Basic attack strength
-    protected int defense;          // Basic defense strength remove no pokemon have defense
-    protected int specialAttack;    // Special attack strength not all pokemon have specialattacks fix that
-    protected int specialDefense;   // Special defense strength not all pokemon have specialdefense either fix that adjust
-    protected int retreatCost;      // Energy cost required to retreat the Pokemon
-    protected int attachedEnergy;   // Number of energy cards currently attached
-    protected String[] moves;       // Array of move names that the Pokémon can use
+    protected int hp;
+    protected String type;
+    protected String weakness;
+    protected int retreatCost;
+    protected Attack[] attacks;
+    protected ArrayList<EnergyCard> attachedEnergies;
     
-    //This is the constructer made to initialize a pokemon with its specific atributes 
-    //then I call the superclass
-    //I made a superclass because it looks better in the code and it is way more organized
-    public Pokemon(String name, int hp, int attack, int defense, int specialAttack, int specialDefense, int retreatCost, String[] moves) {
+    /**
+     * Constructor for a Pokemon card.
+     *
+     * @param name         The name of the Pokemon.
+     * @param hp           The hit points of the Pokemon.
+     * @param type         The Pokemon's type.
+     * @param weakness     The type this Pokemon is weak against.
+     * @param retreatCost  The number of energy cards required to retreat.
+     * @param attacks      An array of available attacks.
+     */
+    public Pokemon(String name, int hp, String type, String weakness, int retreatCost, Attack[] attacks) {
         super(name);
         this.hp = hp;
-        this.attack = attack;
-        this.defense = defense;
-        this.specialAttack = specialAttack;
-        this.specialDefense = specialDefense;
+        this.type = type;
+        this.weakness = weakness;
         this.retreatCost = retreatCost;
-        this.moves = moves;
-        this.attachedEnergy = 0;
+        this.attacks = attacks;
+        this.attachedEnergies = new ArrayList<>();
     }
     
-    // This is the method to attach an energy card to the Pokemon
-    public void attachEnergy() {
-        attachedEnergy++; // increasing the count of attached energy cards
+    /**
+     * Trys to attach an Energy card to this Pokemon.
+     * The Energy card's type must exactly match the Pokemon's type.
+     *
+     * @param energy The Energy card to attach.
+     */
+    public void attachEnergy(EnergyCard energy) {
+        // Require an exact match between the Pokemon's type and the Energy card's type.
+        if (!energy.getEnergyType().equalsIgnoreCase(this.type)) {
+            System.out.println("Cannot attach " + energy.getName() + " to " + getName() +
+                               ". " + getName() + " requires " + this.type + " energy.");
+            return;
+        }
+        attachedEnergies.add(energy);
+        System.out.println(energy.getName() + " attached to " + getName());
     }
     
-    // My method to check if the Pokemon can retreat
-    // If they are able to retreat it returns true if the attached energy is at least equal to the retreat cost
+    /**
+     * Checks to see if the Pokemon has enough attached Energy cards to use a given attack.
+     *  The energy type must exactly match the required type or it will not attach.
+     *
+     * @param attack The attack to check.
+     * @return true if the Pokemon meets the energy requirement, false otherwise.
+     */
+    public boolean hasEnergyForAttack(Attack attack) {
+        int required = attack.getEnergyCost();
+        String reqType = attack.getRequiredType();
+        int count = 0;
+        for (EnergyCard energy : attachedEnergies) {
+            if (energy.getEnergyType().equalsIgnoreCase(reqType))
+                count++;
+        }
+        return count >= required;
+    }
+    
+    /**
+     * Checks if the Pokemon can retreat (this means it has enough attached energies).
+     *
+     * @return true if it can retreat, false otherwise.
+     */
     public boolean canRetreat() {
-        return attachedEnergy >= retreatCost;
+        return attachedEnergies.size() >= retreatCost;
     }
     
-    // The method to perform a retreat action
-    // Now if the Pokemon can retreat subtract the retreat cost from the attached energy
+    /**
+     * Retreats the Pokemon by discarding the number of Energy cards equal to the retreat cost.
+     */
     public void retreat() {
         if (canRetreat()) {
-            attachedEnergy -= retreatCost; // Pay the retreat cost.
-            System.out.println(name + " retreats by discharging " + retreatCost + " energy.");
+            for (int i = 0; i < retreatCost; i++) {
+                attachedEnergies.remove(0);
+            }
+            System.out.println(getName() + " retreats, using " + retreatCost + " energy.");
         } else {
-            System.out.println(name + " cannot retreat due to insufficient energy.");
+            System.out.println(getName() + " cannot retreat (insufficient energy).");
         }
     }
     
-    // method for attacking an opponent's Pokemon
-    // Each Pokemon subclass must have its own version of the attack method
-    // the reason each pokemon needs its own version of the attack method is because they can all have different moves 
-    // the method ensures that all the pokemons moves will be accurete
-    public abstract void attack(Pokemon opponent);
+    /**
+     * Abstract method for attacking.
+     *
+     * @param attackingPlayer The player using this Pokemon.
+     * @param opponent        The opposing Pokemon.
+     * @param attackIndex     The index of the chosen attack.
+     */
+    public abstract void attack(Player attackingPlayer, Pokemon opponent, int attackIndex);
 }
